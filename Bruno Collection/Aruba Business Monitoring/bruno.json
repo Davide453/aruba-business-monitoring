@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Aruba Business Monitoring",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

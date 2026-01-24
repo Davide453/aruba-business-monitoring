@@ -1,0 +1,16 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: aruba-postgres
+    environment:
+      POSTGRES_DB: aruba_monitoring
+      POSTGRES_USER: aruba
+      POSTGRES_PASSWORD: aruba
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

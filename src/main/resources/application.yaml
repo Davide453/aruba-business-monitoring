@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: aruba-business-monitoring
+
+
+
+  spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: aruba
+    password: aruba
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+  sql:
+    init:
+      mode: never

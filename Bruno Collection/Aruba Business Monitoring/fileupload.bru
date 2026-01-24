@@ -1,0 +1,20 @@
+meta {
+  name: fileupload
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/files/upload
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  csv: @file(/home/davide/git/aruba-business-monitoring/src/test/resources/test.csv) @contentType(multipart/form-data)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
