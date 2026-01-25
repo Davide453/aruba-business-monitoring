@@ -48,7 +48,6 @@ public class SpecialConditionService {
         }
 
         /*
-        TODO
         Se un cliente ha più di 5 servizi scaduti, inviare un evento su broker (kafka, rabbit, pulsar, etc…)
         denominato `alerts.customer_expired`. L’evento sarà consumato da altro sistema esterno.*/
         if (hasMultipleExpiredServices(record, today)) {

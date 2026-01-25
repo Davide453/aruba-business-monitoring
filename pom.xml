@@ -92,6 +92,13 @@
             <version>1.5.5.Final</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Spring AMQP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
