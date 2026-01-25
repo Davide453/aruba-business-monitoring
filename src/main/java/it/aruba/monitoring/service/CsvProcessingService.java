@@ -26,7 +26,7 @@ public class CsvProcessingService {
     private final ServiceRecordMapper mapper;
     private final ServiceRecordRepository serviceRecordRepository;
     private final ProcessingErrorService processingErrorService;
-
+    private final SpecialConditionService specialConditionService;
     public void process(MultipartFile csv) {
         List<ServiceRecord> batch = new ArrayList<>(BATCH_SIZE);
         int rowNumber = 0;
@@ -45,7 +45,8 @@ public class CsvProcessingService {
                     batch.add(entity);
 
                     if (batch.size() == BATCH_SIZE) {
-                        serviceRecordRepository.saveAll(batch);
+                        List<ServiceRecord> saved = serviceRecordRepository.saveAll(batch);
+                        specialConditionService.evaluateSpecialCondition(saved);
                         batch.clear();
                     }
 
@@ -57,8 +58,10 @@ public class CsvProcessingService {
             }
 
             if (!batch.isEmpty()) {
-                serviceRecordRepository.saveAll(batch);
+                List<ServiceRecord> saved = serviceRecordRepository.saveAll(batch);
+                specialConditionService.evaluateSpecialCondition(saved);
             }
+
 
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to read CSV file", e);
