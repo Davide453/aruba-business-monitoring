@@ -2,6 +2,7 @@ package it.aruba.monitoring.mapper;
 
 import it.aruba.monitoring.dto.ServiceRecordRaw;
 import it.aruba.monitoring.model.ServiceRecord;
+import it.aruba.monitoring.model.ServiceType;
 import it.aruba.monitoring.model.StatusCsv;
 import org.hibernate.query.sqm.ParsingException;
 import org.mapstruct.Mapper;
@@ -15,7 +16,6 @@ public interface ServiceRecordMapper {
 
 
     ServiceRecord toEntity(ServiceRecordRaw dto);
-
 
 
     default LocalDate mapDate(String value) {
@@ -48,6 +48,17 @@ public interface ServiceRecordMapper {
             return StatusCsv.valueOf(value.toUpperCase());
         } catch (IllegalArgumentException ex) {
             throw new ParsingException("Invalid status: " + value);
+        }
+    }
+
+    default ServiceType mapServiceType(String value) {
+        if (value == null || value.isBlank()) {
+            throw new ParsingException("Service Type is missing");
+        }
+        try {
+            return ServiceType.valueOf(value.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            throw new ParsingException("Invalid service type: " + value);
         }
     }
 }

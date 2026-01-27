@@ -80,15 +80,15 @@ public class CsvProcessingService {
                     "Invalid column count: expected 6, found " + row.length);
         }
 
-        ServiceRecordRaw dto = new ServiceRecordRaw();
-        dto.setCustomerId(row[0]);
-        dto.setServiceType(row[1]);
-        dto.setActivationDate(row[2]);
-        dto.setExpirationDate(row[3]);
-        dto.setAmount(row[4]);
-        dto.setStatus(row[5]);
+        ServiceRecordRaw recordRaw = new ServiceRecordRaw();
+        recordRaw.setCustomerId(row[0]);
+        recordRaw.setServiceType(row[1]);
+        recordRaw.setActivationDate(row[2]);
+        recordRaw.setExpirationDate(row[3]);
+        recordRaw.setAmount(row[4]);
+        recordRaw.setStatus(row[5]);
 
-        return dto;
+        return recordRaw;
     }
 
     private void validate(ServiceRecord record) {

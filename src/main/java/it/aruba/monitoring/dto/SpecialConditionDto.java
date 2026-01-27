@@ -1,5 +1,6 @@
 package it.aruba.monitoring.dto;
 
+import it.aruba.monitoring.model.ServiceType;
 import it.aruba.monitoring.model.SpecialConditionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,5 +13,5 @@ public class SpecialConditionDto {
 
     private SpecialConditionType type;
     private String customerId;
-    private String serviceType;
+    private ServiceType serviceType;
 }

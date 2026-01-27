@@ -18,8 +18,9 @@ public class ServiceRecord {
     @Column(name = "customer_id", nullable = false)
     private String customerId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "service_type", nullable = false)
-    private String serviceType;
+    private ServiceType serviceType;
 
     private LocalDate activationDate;
     private LocalDate expirationDate;
