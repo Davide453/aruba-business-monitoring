@@ -1,9 +1,6 @@
 spring:
   application:
     name: aruba-business-monitoring
-
-
-
   spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
@@ -17,3 +14,12 @@ spring:
   sql:
     init:
       mode: never
+  RabbitMQ:
+    listener:
+          simple:
+            retry:
+              enabled: true
+              max-attempts: 3
+              initial-interval: 2000
+              multiplier: 2.0
+            default-requeue-rejected: false
