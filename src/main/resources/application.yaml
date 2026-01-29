@@ -3,9 +3,9 @@ spring:
     name: aruba-business-monitoring
   spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: aruba
-    password: aruba
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/aruba_monitoring}
+    username: ${SPRING_DATASOURCE_USERNAME:aruba}
+    password: ${SPRING_DATASOURCE_PASSWORD:aruba}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -13,7 +13,9 @@ spring:
     show-sql: false
   sql:
     init:
-      mode: never
+      mode: always
+      platform: postgres
+      schema-locations: classpath:sql/schema.sql
   RabbitMQ:
     listener:
           simple:
