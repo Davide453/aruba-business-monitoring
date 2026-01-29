@@ -15,6 +15,8 @@ public class RabbitMqConfig {
 
     // WORK QUEUE
     public static final String NOTIFICATION_QUEUE = "notification.outbox.queue";
+    public static final  String UPSELLING_ROUTING_KEY = "events.upselling";
+    public static final String MARKETING_MAIL_QUEUE = "marketing.mail.queue";
 
 
     @Bean
@@ -26,6 +28,20 @@ public class RabbitMqConfig {
     public DirectExchange eventsExchange() {
         return new DirectExchange(EVENTS_EXCHANGE);
     }
+
+    @Bean
+    public Queue marketingMailQueue() {
+        return new Queue(MARKETING_MAIL_QUEUE, true);
+    }
+
+    @Bean
+    public Binding marketingMailBinding(Queue marketingMailQueue, DirectExchange eventsExchange) {
+        return BindingBuilder
+                .bind(marketingMailQueue)
+                .to(eventsExchange)
+                .with(UPSELLING_ROUTING_KEY);
+    }
+
 
     @Bean
     public JacksonJsonMessageConverter jackson2JsonMessageConverter() {

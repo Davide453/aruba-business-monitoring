@@ -38,7 +38,12 @@ public class NotificationService {
         );
     }
 
-    private void notifyMarketing(ServiceRecord record) {
+    public void notifyMarketing(ServiceRecord record) {
+            rabbitTemplate.convertAndSend(
+                    RabbitMqConfig.EVENTS_EXCHANGE,
+                    RabbitMqConfig.UPSELLING_ROUTING_KEY,
+                    record
+            );
         log.info(
                 "Upselling opportunity: customer {} has active service {} for over 3 years",
                 record.getCustomerId(),

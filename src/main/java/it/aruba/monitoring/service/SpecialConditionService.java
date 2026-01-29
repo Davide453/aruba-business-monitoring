@@ -63,8 +63,7 @@ public class SpecialConditionService {
         inviare una email al team marketing, segnalando l’opportunità di upselling
          */
         if (isActiveOverThreeYears(record, today)) {
-            notificationService.notify(
-                    SpecialConditionType.ACTIVE_OVER_THREE_YEARS,
+            notificationService.notifyMarketing(
                     record
             );
         }
