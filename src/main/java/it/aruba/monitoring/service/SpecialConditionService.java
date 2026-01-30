@@ -4,7 +4,6 @@ import it.aruba.monitoring.model.ServiceRecord;
 import it.aruba.monitoring.model.SpecialConditionType;
 import it.aruba.monitoring.model.StatusCsv;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,6 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SpecialConditionService {
     private static final int UPSELL_YEARS = 3;
+    private static final int EXPIRING_SOON_DAYS = 15;
+    private static final int MULTIPLE_EXPIRED_THRESHOLD = 5;
 
     private final NotificationService notificationService;
     private final ServiceRecordService serviceRecordService;
@@ -80,7 +81,7 @@ public class SpecialConditionService {
                 record.getCustomerId(),
                 today
         );
-        return expiredCount >= 5;
+        return expiredCount >= MULTIPLE_EXPIRED_THRESHOLD;
     }
 
     private boolean isExpired(ServiceRecord record, LocalDate today) {
@@ -89,7 +90,7 @@ public class SpecialConditionService {
 
     private boolean isExpiringSoon(ServiceRecord record, LocalDate today) {
         return record.getExpirationDate()
-                .isBefore(today.plusDays(15));
+                .isBefore(today.plusDays(EXPIRING_SOON_DAYS));
     }
 
     private boolean isActiveOverThreeYears(ServiceRecord record, LocalDate today) {

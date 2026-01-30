@@ -9,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import static it.aruba.monitoring.model.SpecialConditionType.MULTIPLE_EXPIRED_SERVICES;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
