@@ -1,4 +1,4 @@
-package it.aruba.monitoring;
+package it.aruba.monitoring.controller;
 
 import it.aruba.monitoring.repository.ProcessingErrorRepository;
 import it.aruba.monitoring.repository.ServiceRecordRepository;
@@ -29,6 +29,9 @@ public class FileUploadIntegrationTest {
 
     @Autowired
     private ProcessingErrorRepository processingErrorRepository;
+
+    private final String TOKEN = "Bearer test";
+
     @BeforeEach
     void cleanDb() {
         processingErrorRepository.deleteAll();
@@ -46,7 +49,7 @@ public class FileUploadIntegrationTest {
         );
 
         mockMvc.perform(multipart("/api/files/upload")
-                        .file(file))
+                        .file(file).header("Authorization", TOKEN))
                 .andExpect(status().isAccepted());
 
         assertEquals(2, serviceRecordRepository.count());

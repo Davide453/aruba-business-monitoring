@@ -1,6 +1,7 @@
 package it.aruba.monitoring.service;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import it.aruba.monitoring.dto.ServiceRecordRaw;
 import it.aruba.monitoring.mapper.ServiceRecordMapper;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -27,12 +29,15 @@ public class CsvProcessingService {
     private final ServiceRecordRepository serviceRecordRepository;
     private final ProcessingErrorService processingErrorService;
     private final SpecialConditionService specialConditionService;
+
     public void process(MultipartFile csv) {
         List<ServiceRecord> batch = new ArrayList<>(BATCH_SIZE);
         int rowNumber = 0;
 
-        try (CSVReader reader = new CSVReader(
-                new InputStreamReader(csv.getInputStream()))) {
+        // skip CSV header
+        try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(csv.getInputStream()))
+                .withSkipLines(1)
+                .build();) {
 
             String[] row;
 
@@ -79,7 +84,6 @@ public class CsvProcessingService {
             throw new ParsingException(
                     "Invalid column count: expected 6, found " + row.length);
         }
-
         ServiceRecordRaw recordRaw = new ServiceRecordRaw();
         recordRaw.setCustomerId(row[0]);
         recordRaw.setServiceType(row[1]);
@@ -92,7 +96,6 @@ public class CsvProcessingService {
     }
 
     private void validate(ServiceRecord record) {
-
         if (record.getCustomerId() == null || record.getCustomerId().isBlank()) {
             throw new ValidationException("customer_id is blank");
         }

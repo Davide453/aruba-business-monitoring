@@ -1,3 +1,4 @@
+customer_id,service_type,activation_date,expiration_date,amount,status
 CUST001,hosting,2023-01-01,2025-01-01,120.50,ACTIVE
 CUST002,pec,2024-01-01,2023-01-01,50.00,ACTIVE
 CUST003,spid,2024-02-30,2025-02-01,30.00,ACTIVE
