@@ -14,12 +14,35 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     container_name: aruba-rabbitmq
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     ports:
       - "5672:5672"
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  app:
+    build: .
+    container_name: aruba-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aruba_monitoring
+      SPRING_DATASOURCE_USERNAME: aruba
+      SPRING_DATASOURCE_PASSWORD: aruba
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+
 
 volumes:
   pgdata:

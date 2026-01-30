@@ -18,7 +18,7 @@ public interface ServiceRecordRepository extends JpaRepository<ServiceRecord, Lo
     long countExpiredServices(@Param("customerId") String customerId, @Param("today") LocalDate today);
 
 
-    @Query("SELECT sr.customerId FROM ServiceRecord sr WHERE sr.status= 'EXPIRED' GROUP BY sr.customerId HAVING COUNT(*) > 2")
+    @Query("SELECT sr.customerId FROM ServiceRecord sr WHERE sr.status= 'EXPIRED' GROUP BY sr.customerId HAVING COUNT(*) > 1")
     List<String> findCustomersWithMultipleExpiredServices();
 
     @Query("SELECT sr.customerId FROM ServiceRecord sr WHERE sr.status= 'ACTIVE' AND sr.expirationDate between :now and :limit")

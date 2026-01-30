@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CsvProcessingService {
-    private static final int BATCH_SIZE = 1;
+    private static final int BATCH_SIZE = 500;
     private final ServiceRecordMapper mapper;
     private final ServiceRecordRepository serviceRecordRepository;
     private final ProcessingErrorService processingErrorService;
