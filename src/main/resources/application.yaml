@@ -19,11 +19,6 @@ spring:
   sql:
     init:
       mode: never
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://mock-issuer.example.com
   RabbitMQ:
     listener:
       simple:
