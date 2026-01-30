@@ -1,6 +1,9 @@
 package it.aruba.monitoring.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.aruba.monitoring.dto.report.ReportSummaryDto;
 import it.aruba.monitoring.service.ServiceRecordService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,10 @@ public class ReportController {
     private final ServiceRecordService recordService;
 
     @GetMapping("/summary")
+    @Operation(summary = "Return a summary of the data")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Summary Report"),
+    })
     private ResponseEntity<ReportSummaryDto> getSummary() {
         ReportSummaryDto dto = recordService.getSummary();
         return ResponseEntity.ok(dto);

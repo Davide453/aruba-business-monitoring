@@ -19,7 +19,8 @@ public class SecurityConfig {
     SecurityFilterChain errorFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .securityMatcher("/error")
+                .securityMatcher("/error",
+                        "/swagger-ui","/swagger-ui/**","/swagger-ui.html","/v3/api-docs/**")
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable);
 

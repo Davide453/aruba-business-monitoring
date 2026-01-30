@@ -1,5 +1,8 @@
 package it.aruba.monitoring.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.aruba.monitoring.service.CsvProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,12 @@ public class FileUploadController {
     private final CsvProcessingService csvProcessingService;
 
     @PostMapping("/upload")
+    @Operation(summary = "Upload a CSV file for processing")
+    @ApiResponses({
+            @ApiResponse(responseCode = "202", description = "CSV accepted for processing"),
+            @ApiResponse(responseCode = "400", description = "Invalid CSV file"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     public ResponseEntity<Void> upload(@RequestParam("csv") MultipartFile csv) {
         csvProcessingService.process(csv);
         return ResponseEntity.accepted().build();
