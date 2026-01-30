@@ -1,3 +1,5 @@
+server:
+  port: 8081
 spring:
   application:
     name: aruba-business-monitoring
@@ -14,12 +16,17 @@ spring:
   sql:
     init:
       mode: never
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://mock-issuer.example.com
   RabbitMQ:
     listener:
-          simple:
-            retry:
-              enabled: true
-              max-attempts: 3
-              initial-interval: 2000
-              multiplier: 2.0
-            default-requeue-rejected: false
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 2000
+          multiplier: 2.0
+        default-requeue-rejected: false
