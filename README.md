@@ -220,7 +220,7 @@ CUST002,pec,2021-06-01,2024-01-15,49.99,expired
 ```
 curl -X POST http://localhost:8080/api/files/upload \
 -H "Authorization: Bearer demo-token" \
--F "csv=@services.csv"
+F "csv=@./Bruno Collection/Aruba Business Monitoring/test_1.csv"
 ```
 
 ### 📊 Report Riepilogativo
@@ -286,8 +286,7 @@ Restituisce un report aggregato con statistiche sui servizi dei clienti, calcola
 #### cURL
 ```
 curl http://localhost:8080/api/report/summary \
--H "Authorization: Bearer demo-token" \
-| jq .
+-H "Authorization: Bearer demo-token" 
 ```
 Accesso RabbitMQ Management UI
 ```
