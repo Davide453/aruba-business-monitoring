@@ -40,6 +40,9 @@ public class CsvProcessingService {
 
             String[] row;
 
+            // Accumulate the record to evaluate the special condition at the end
+            List<ServiceRecord> allRecords = new ArrayList<>();
+
             while ((row = reader.readNext()) != null) {
                 rowNumber++;
 
@@ -50,7 +53,7 @@ public class CsvProcessingService {
 
                     if (batch.size() == BATCH_SIZE) {
                         List<ServiceRecord> saved = serviceRecordRepository.saveAll(batch);
-                        specialConditionService.evaluateSpecialCondition(saved);
+                        allRecords.addAll(saved);
                         batch.clear();
                     }
 
@@ -63,9 +66,13 @@ public class CsvProcessingService {
 
             if (!batch.isEmpty()) {
                 List<ServiceRecord> saved = serviceRecordRepository.saveAll(batch);
-                specialConditionService.evaluateSpecialCondition(saved);
+                allRecords.addAll(saved);
             }
 
+            if (!allRecords.isEmpty()) {
+                specialConditionService.evaluateSpecialCondition(allRecords);
+
+            }
 
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to read CSV file", e);

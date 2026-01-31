@@ -24,7 +24,7 @@ public class ReportController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Summary Report"),
     })
-    private ResponseEntity<ReportSummaryDto> getSummary() {
+    public ResponseEntity<ReportSummaryDto> getSummary() {
         ReportSummaryDto dto = recordService.getSummary();
         return ResponseEntity.ok(dto);
     }

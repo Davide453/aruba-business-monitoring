@@ -18,10 +18,16 @@ public class RabbitMqConfig {
     public static final  String UPSELLING_ROUTING_KEY = "events.upselling";
     public static final String MARKETING_MAIL_QUEUE = "marketing.mail.queue";
 
+    // DLQ
+    public static final String NOTIFICATION_DLQ = "notification.dlq";
+    public static final String DLQ_EXCHANGE = "dlq.exchange";
 
     @Bean
     public Queue notificationQueue() {
-        return QueueBuilder.durable(NOTIFICATION_QUEUE).build();
+        return QueueBuilder.durable(NOTIFICATION_QUEUE)
+                .withArgument("x-dead-letter-exchange", DLQ_EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", NOTIFICATION_DLQ)
+                .build();
     }
 
     @Bean
@@ -42,6 +48,14 @@ public class RabbitMqConfig {
                 .with(UPSELLING_ROUTING_KEY);
     }
 
+    @Bean
+    public Queue notificationDLQ() {
+        return QueueBuilder.durable(NOTIFICATION_DLQ).build();
+    }
+    @Bean
+    public DirectExchange dlqExchange() {
+        return new DirectExchange(DLQ_EXCHANGE);
+    }
 
     @Bean
     public JacksonJsonMessageConverter jackson2JsonMessageConverter() {
