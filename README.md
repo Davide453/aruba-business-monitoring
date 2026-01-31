@@ -23,7 +23,7 @@ Sistema di caricamento, elaborazione e monitoraggio dei dati cliente per i servi
 
 ```bash
 # 1. Clone del repository
-git clone <repository-url>
+git clone https://github.com/Davide453/aruba-business-monitoring.git
 cd aruba-business-monitoring
 
 # 2. Avvio dell'intera infrastruttura (PostgreSQL + RabbitMQ + App)
