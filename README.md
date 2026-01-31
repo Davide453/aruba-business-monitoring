@@ -39,6 +39,9 @@ docker-compose up postgres rabbitmq
 # 2. Avvia l'applicazione
 mvn spring-boot:run
 ```
+### 🧪 Test Manuali (Bruno Collection)
+
+Nella repository è inclusa una **Bruno Collection** per testare manualmente le API REST esposte dall’applicazione.
 
 ## Architettura
 ### Stack Tecnologico
